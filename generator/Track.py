@@ -118,8 +118,8 @@ class Track:
                 filename = f"{base_filename}_{i + 1}.scad"
 
                 tag = generate_aruco_tags.generate_tag()
-                tag_cad = utils.generate_scad(tag)
-                tag_cad = tag_cad.translate([19,0,0])
+                tag_cad = utils.generate_scad_new(tag)
+                tag_cad = tag_cad.right(21).up(0.01)
 
                 # find the direction on the end of the track
                 end_point1 = segment[-1]
@@ -133,11 +133,13 @@ class Track:
 
                 main_path = path_sweep(cross_shape,segment)
 
-                cad = union()(main_path+cylinder(r=5.5, h=10).right(0).fwd(15) +\
+                cad = union()(main_path+\
+                        # tag_cad+\
+                        cylinder(r=5.5, h=10).right(0).fwd(15) +\
                         cube([5,20,10],anchor=CENTER).up(5).fwd(10)-\
                         cylinder(r=6.5, h=11).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
                         cube([15,7,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-2*np.cos(angle)).back(end_point1[1]-2*np.sin(angle)))
-                
+                print("union finished")
                 cad = cad.add(tag_cad)
                 cad.save_as_scad(filename=filename)
 
