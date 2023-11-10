@@ -128,21 +128,22 @@ def generate_scad_new(marker: np.array):
 	# Initialize an empty object
 	marker = cv2.resize(marker,(7,7))
 	model = []
-	cell_size = 4  # Size of each cell in CAD units
+	cell_size = 8  # Size of each cell in CAD units
 	n_cell = 0.01
 	for i, row in enumerate(marker):
 		for j, cell in enumerate(row):
 			if int(cell) != 255:
-				cube_obj = cube([cell_size, cell_size, 4])
+				cube_obj = cube([cell_size, cell_size, 3])
 				# Translate the cube to the appropriate position based on its location in the array
 				translated_cube = cube_obj.translate([j*cell_size, i*cell_size, n_cell])
 				# Add the cube to the model
 				model.append(translated_cube)
-				n_cell+=0.01
+				# n_cell+=0.01
 				# model = union()(model+translated_cube)
 		else: 
 			continue
-	tag_model = cube([4, 28, 4]).left(4)
+	# tag_model = cube([24, 7, 3]).left(24)+cube([24, 7, 3]).left(24).back(48)
+	tag_model = cube([24, 6, 3]).left(24).back(24)+cube([56, 10, 5]).left(24).back(72)+cube([56, 10, 5]).left(24).back(72)+cube([6, 18, 3]).right(24).back(56)
 	for i in range(len(model)):
 		tag_model = tag_model+model[i]
 
@@ -162,3 +163,4 @@ def generate_scad_new(marker: np.array):
 # cv2.imshow("ArUCo Tag", test_tag)
 
 # cv2.waitKey(0)
+

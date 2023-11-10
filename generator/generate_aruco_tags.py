@@ -1,5 +1,5 @@
 import numpy as np
-from utils import ARUCO_DICT, check_image, generate_scad
+from utils import ARUCO_DICT, check_image, generate_scad_new
 import cv2
 import sys
 import os
@@ -58,3 +58,5 @@ def generate_tag(tag_size = 100, start_id = 11, track_id = 0):
     # cv2.waitKey(0)
 
 # generate_tag()
+tag_1 = generate_tag()
+tag_cad = generate_scad_new(tag_1)

@@ -33,109 +33,126 @@ include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../
 
 
 union() {
-	left(x = 4) {
-		cube(size = [4, 28, 4]);
+	back(y = 24) {
+		left(x = 24) {
+			cube(size = [24, 6, 3]);
+		}
+	}
+	back(y = 72) {
+		left(x = 24) {
+			cube(size = [56, 10, 5]);
+		}
+	}
+	back(y = 72) {
+		left(x = 24) {
+			cube(size = [56, 10, 5]);
+		}
+	}
+	back(y = 56) {
+		right(x = 24) {
+			cube(size = [6, 18, 3]);
+		}
 	}
 	translate(v = [0, 0, 0.0100000000]) {
-		cube(size = [4, 4, 4]);
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [4, 0, 0.0200000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [8, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 0, 0.0300000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [12, 0, 0.0400000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [24, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [16, 0, 0.0500000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [32, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [20, 0, 0.0600000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [40, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 0, 0.0700000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 0, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 4, 0.0800000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 8, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 4, 0.0900000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 8, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [12, 4, 0.1000000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [24, 8, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [20, 4, 0.1100000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [40, 8, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 4, 0.1200000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 8, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 8, 0.1300000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 16, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [12, 8, 0.1400000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [24, 16, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 8, 0.1500000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 16, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 12, 0.1600000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 24, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 12, 0.1700000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 24, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [20, 12, 0.1800000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [40, 24, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 12, 0.1900000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 24, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 16, 0.2000000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 32, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 16, 0.2100000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 32, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [12, 16, 0.2200000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [24, 32, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 16, 0.2300000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 32, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 20, 0.2400000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 40, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 20, 0.2500000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 40, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [16, 20, 0.2600000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [32, 40, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 20, 0.2700000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 40, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [0, 24, 0.2800000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [0, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [4, 24, 0.2900000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [8, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [8, 24, 0.3000000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [16, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [12, 24, 0.3100000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [24, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [16, 24, 0.3200000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [32, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [20, 24, 0.3300000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [40, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
-	translate(v = [24, 24, 0.3400000000]) {
-		cube(size = [4, 4, 4]);
+	translate(v = [48, 48, 0.0100000000]) {
+		cube(size = [8, 8, 3]);
 	}
 }

@@ -65,12 +65,24 @@ union() {
 	up(z = 0.0100000000) {
 		right(x = 30) {
 			union() {
-				left(x = 24) {
-					cube(size = [24, 7, 3]);
-				}
-				back(y = 48) {
+				back(y = 24) {
 					left(x = 24) {
-						cube(size = [24, 7, 3]);
+						cube(size = [24, 6, 3]);
+					}
+				}
+				back(y = 72) {
+					left(x = 24) {
+						cube(size = [56, 10, 5]);
+					}
+				}
+				back(y = 72) {
+					left(x = 24) {
+						cube(size = [56, 10, 5]);
+					}
+				}
+				back(y = 56) {
+					right(x = 24) {
+						cube(size = [6, 18, 3]);
 					}
 				}
 				translate(v = [0, 0, 0.0100000000]) {
@@ -100,10 +112,13 @@ union() {
 				translate(v = [8, 8, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
-				translate(v = [24, 8, 0.0100000000]) {
+				translate(v = [16, 8, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [32, 8, 0.0100000000]) {
+					cube(size = [8, 8, 3]);
+				}
+				translate(v = [40, 8, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [48, 8, 0.0100000000]) {
@@ -112,10 +127,16 @@ union() {
 				translate(v = [0, 16, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
+				translate(v = [8, 16, 0.0100000000]) {
+					cube(size = [8, 8, 3]);
+				}
 				translate(v = [16, 16, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [24, 16, 0.0100000000]) {
+					cube(size = [8, 8, 3]);
+				}
+				translate(v = [32, 16, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [48, 16, 0.0100000000]) {
@@ -124,13 +145,10 @@ union() {
 				translate(v = [0, 24, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
-				translate(v = [8, 24, 0.0100000000]) {
-					cube(size = [8, 8, 3]);
-				}
 				translate(v = [16, 24, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
-				translate(v = [24, 24, 0.0100000000]) {
+				translate(v = [32, 24, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [40, 24, 0.0100000000]) {
@@ -142,10 +160,13 @@ union() {
 				translate(v = [0, 32, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
+				translate(v = [8, 32, 0.0100000000]) {
+					cube(size = [8, 8, 3]);
+				}
 				translate(v = [16, 32, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
-				translate(v = [32, 32, 0.0100000000]) {
+				translate(v = [40, 32, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [48, 32, 0.0100000000]) {
@@ -155,9 +176,6 @@ union() {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [8, 40, 0.0100000000]) {
-					cube(size = [8, 8, 3]);
-				}
-				translate(v = [32, 40, 0.0100000000]) {
 					cube(size = [8, 8, 3]);
 				}
 				translate(v = [40, 40, 0.0100000000]) {

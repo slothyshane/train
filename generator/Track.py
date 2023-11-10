@@ -114,12 +114,16 @@ class Track:
     def save_scad_files(self, cross_shape, base_filename, to_stl=False):
 
         if len(self.segments)>0:
+            base_names = []
             for i, segment in enumerate(self.segments):
+                base_name = f"{base_filename}_{i + 1}"
+                base_names.append(base_name)
+
                 filename = f"{base_filename}_{i + 1}.scad"
 
                 tag = generate_aruco_tags.generate_tag()
                 tag_cad = utils.generate_scad_new(tag)
-                tag_cad = tag_cad.right(21).up(0.01)
+                tag_cad = tag_cad.right(30).up(0.01)
 
                 # find the direction on the end of the track
                 end_point1 = segment[-1]
@@ -151,6 +155,7 @@ class Track:
 
 
                 print(f"Saved {filename}")
+            return base_names
         else:
             print("no curve saved!, run slipt function")
 
