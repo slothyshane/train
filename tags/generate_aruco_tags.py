@@ -1,5 +1,5 @@
 import numpy as np
-from utils import ARUCO_DICT, check_image, generate_scad
+from utils import ARUCO_DICT, check_image
 import cv2
 import sys
 import os
@@ -9,10 +9,11 @@ arucoDict = cv2.aruco.Dictionary_get(ARUCO_DICT['DICT_5X5_100'])
 
 def generate_tag(tag_size = 100, start_id = 11, track_id = 0):
     tag_set = set()
-    directory = os.getcwd() + '/tags'
+    directory = os.getcwd()
+    print(directory)
 
     # open the tag_library.txt file to read all the tags generated
-    with open(directory + '/tag_library.txt', 'r') as f:
+    with open(directory + '/tags/tag_library.txt', 'r') as f:
         tag_library = f.read().splitlines()
 
     # separate by comma
@@ -41,8 +42,8 @@ def generate_tag(tag_size = 100, start_id = 11, track_id = 0):
 
         start_id += 1
 
-    # write the file
-    with open(directory + '/tag_library.txt', 'a') as f:
+    # write the file to the tag_library.txt
+    with open(directory + '/tags/tag_library.txt', 'a') as f:
         f.write(f'{start_id},{track_id}\n')
 
     # Save the tag generated

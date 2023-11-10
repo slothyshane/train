@@ -25,7 +25,7 @@ while True:
     width = 1000
     height = int(width*(h/w))
     image = cv2.resize(image, (width, height), interpolation=cv2.INTER_CUBIC)
-    
+    image_original = image.copy()   
     arucoDict = cv2.aruco.Dictionary_get(ARUCO_DICT['DICT_5X5_100'])
     arucoParams = cv2.aruco.DetectorParameters_create()
     corners, ids, rejected = cv2.aruco.detectMarkers(image, arucoDict, parameters=arucoParams)
@@ -44,6 +44,8 @@ while True:
     if not success:
         break
     cv2.imshow("Result", detected)
+    if len(corners) > 0:
+        print(len(ids))
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

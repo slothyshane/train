@@ -173,12 +173,13 @@ def trackCallBack():
 
         track = Track(curve_3d)
         track.split_by_length(min_len)
-        track.save_scad_files(trackshape,'part',True)
+        track.save_scad_files(trackshape,'part',False)
 
         # Seperate track
 
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+    # print out error
+    except Exception as e:
+        print(e)
 
 
 # A python function to generate curved toy train track

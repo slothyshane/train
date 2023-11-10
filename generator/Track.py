@@ -109,15 +109,13 @@ class Track:
 
         return self.segments
     
-
-    
     def save_scad_files(self, cross_shape, base_filename, to_stl=False):
 
         if len(self.segments)>0:
             for i, segment in enumerate(self.segments):
                 filename = f"{base_filename}_{i + 1}.scad"
 
-                tag = generate_aruco_tags.generate_tag()
+                tag = generate_aruco_tags.generate_tag(segment)
                 tag_cad = utils.generate_scad_new(tag)
                 tag_cad = tag_cad.right(21).up(0.01)
 

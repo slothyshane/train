@@ -3,6 +3,10 @@ import numpy as np
 import queue
 import copy
 from solid2.extensions.bosl2 import *
+import os 
+import sys
+import matplotlib.pyplot as plt	
+import ast
 
 ARUCO_DICT = {
 	"DICT_4X4_50": cv2.aruco.DICT_4X4_50,
@@ -50,6 +54,12 @@ def aruco_display(corners, ids, rejected, image):
 			cv2.line(image, bottomLeft, topLeft, (0, 255, 0), 2)
 			# compute and draw the center (x, y)-coordinates of the ArUco
 			# marker
+
+
+			# plot rejected markers
+			# for r in rejected:
+				
+
 			cX = int((topLeft[0] + bottomRight[0]) / 2.0)
 			cY = int((topLeft[1] + bottomRight[1]) / 2.0)
 			cv2.circle(image, (cX, cY), 4, (0, 0, 255), -1)
@@ -58,6 +68,25 @@ def aruco_display(corners, ids, rejected, image):
 				0.5, (0, 255, 0), 2)
 			print("[Inference] ArUco marker ID: {}".format(markerID))
 			# show the output image
+
+	# if 
+	if len(rejected) > 0 and len(corners) == 0:
+		# plot rejected markers
+		for r in rejected:
+			# extract the marker corners (which are always returned in
+			# top-left, top-right, bottom-right, and bottom-left order)
+			corners = r.reshape((4, 2))
+			(topLeft, topRight, bottomRight, bottomLeft) = corners
+			# convert each of the (x, y)-coordinate pairs to integers
+			topRight = (int(topRight[0]), int(topRight[1]))
+			bottomRight = (int(bottomRight[0]), int(bottomRight[1]))
+			bottomLeft = (int(bottomLeft[0]), int(bottomLeft[1]))
+			topLeft = (int(topLeft[0]), int(topLeft[1]))
+
+			cv2.line(image, topLeft, topRight, (0, 255, 0), 2)
+			cv2.line(image, topRight, bottomRight, (0, 255, 0), 2)
+			cv2.line(image, bottomRight, bottomLeft, (0, 255, 0), 2)
+			cv2.line(image, bottomLeft, topLeft, (0, 255, 0), 2)
 	return image
 
 def check_image(tag: np.array):
@@ -116,16 +145,42 @@ def generate_scad(marker: np.array):
 	return model
 	# model.save_as_scad("test.scad")
 
-# for testing only
+def tag_file_reader():
+	tag_ids = []
+	curves = []
+	track_id = []
 
-# create a 5 * 5 tag
-# test_tag = np.array([[0, 0, 0, 0, 0],
-# 					 [0, 0, 255, 0, 0],
-# 					 [0, 255, 0, 255, 0],
-# 					 [0, 0, 255, 0, 0],
-# 					 [0, 0, 0, 0, 0]], dtype="uint8")
+	with open('tags/tag_library.txt', 'r') as f:
+		tag_file= f.read().splitlines()
 
-# check_image(test_tag)
-# cv2.imshow("ArUCo Tag", test_tag)
+		if len(tag_file) > 1 and tag_file[1] != ['']:
+			for i in range(1, len(tag_file)):
 
-# cv2.waitKey(0)
+				#add track id and tag array to a map
+				tag_file[i] = tag_file[i].split('%')
+				curve_str = tag_file[i][2].split('/')
+				curve = []
+				for item in curve_str:
+					if item == '':
+						continue
+					item_list = ast.literal_eval(item)
+					curve.append(item_list)
+
+					# loop through the curves to change it from mm to cm
+				for j in range(len(curve)):
+					curve[j][0] = curve[j][0]/10.0
+					curve[j][1] = curve[j][1]/10.0
+					curve[j][2] = curve[j][2]/10.0
+
+					# swap the x and y coordinates
+					temp = curve[j][0]
+					curve[j][0] = curve[j][1]
+					curve[j][1] = temp
+
+				curves.append(curve)
+				tag_ids.append(int(tag_file[i][0]))
+				track_id.append(int(tag_file[i][1]))
+
+
+	return (tag_ids, track_id, curves)
+
