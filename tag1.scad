@@ -26,41 +26,70 @@ include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../
 include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../libs/BOSL2/vnf.scad>;
 include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../libs/BOSL2/utility.scad>;
 include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../libs/BOSL2/partitions.scad>;
+include </home/scg1224/.local/lib/python3.10/site-packages/solid2/extensions/../libs/BOSL2/metric_screws.scad>;
 
 
 
 
 
-union() {
-	difference() {
-		union() {
-			path_sweep(path = arc(angle = -30, d = 300, n = 20), shape = [[0, 0], [20, 0], [20, 10], [15, 10], [15, 7], [10, 7], [10, 10], [0, 10], [-10, 10], [-10, 7], [-15, 7], [-15, 10], [-20, 10], [-20, 0]]);
-			back(y = 15) {
-				right(x = 150.0000000000) {
-					cylinder(h = 10, r = 6);
-				}
-			}
-			fwd(y = 10) {
-				right(x = 147.0000000000) {
-					cube(size = [6, 20, 10]);
-				}
+difference() {
+	union() {
+		cube(size = [56, 56, 3]);
+		back(y = 24) {
+			left(x = 24) {
+				cube(size = [24, 5, 3]);
 			}
 		}
-		down(z = 0.5000000000) {
-			back(y = -63.74166975080227) {
-				right(x = 136.4038105676658) {
-					cylinder(h = 11, r = 6.5000000000);
-				}
+		back(y = 72) {
+			left(x = 24) {
+				cube(size = [56, 10, 5]);
 			}
 		}
-		rotate(a = -30) {
-			down(z = 1) {
-				fwd(y = 10) {
-					right(x = 146.5000000000) {
-						cube(size = [7, 20, 30]);
-					}
-				}
+		back(y = 72) {
+			left(x = 24) {
+				cube(size = [56, 10, 5]);
 			}
 		}
+		back(y = 56) {
+			right(x = 24) {
+				cube(size = [5, 18, 3]);
+			}
+		}
+	}
+	translate(v = [8, 8, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [8, 16, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [8, 24, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [8, 32, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [16, 16, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [16, 24, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [24, 16, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [24, 32, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [32, 8, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [32, 16, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [40, 8, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
+	}
+	translate(v = [40, 40, -0.1000000000]) {
+		cube(size = [8.1000000000, 8.1000000000, 3.2000000000]);
 	}
 }

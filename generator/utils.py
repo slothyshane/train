@@ -132,10 +132,10 @@ def generate_scad_new(marker: np.array):
 	n_cell = 0.01
 	for i, row in enumerate(marker):
 		for j, cell in enumerate(row):
-			if int(cell) != 255:
-				cube_obj = cube([cell_size, cell_size, 3])
+			if int(cell) != 0:
+				cube_obj = cube([cell_size+0.1, cell_size+0.1, 3.2])
 				# Translate the cube to the appropriate position based on its location in the array
-				translated_cube = cube_obj.translate([j*cell_size, i*cell_size, n_cell])
+				translated_cube = cube_obj.translate([i*cell_size, j*cell_size, -0.1])
 				# Add the cube to the model
 				model.append(translated_cube)
 				# n_cell+=0.01
@@ -143,9 +143,10 @@ def generate_scad_new(marker: np.array):
 		else: 
 			continue
 	# tag_model = cube([24, 7, 3]).left(24)+cube([24, 7, 3]).left(24).back(48)
-	tag_model = cube([24, 6, 3]).left(24).back(24)+cube([56, 10, 5]).left(24).back(72)+cube([56, 10, 5]).left(24).back(72)+cube([6, 18, 3]).right(24).back(56)
+	tag_model = cube([7*cell_size,7*cell_size,3])+cube([3*cell_size, 5, 3]).left(3*cell_size).back(3*cell_size)+cube([7*cell_size, 10, 5]).left(3*cell_size).back(9*cell_size)+cube([7*cell_size, 10, 5]).left(3*cell_size).back(9*cell_size)+cube([5, 18, 3]).right(3*cell_size).back(7*cell_size)
+
 	for i in range(len(model)):
-		tag_model = tag_model+model[i]
+		tag_model = tag_model-model[i]
 
 	tag_model.save_as_scad(filename="tag1.scad")
 	return tag_model

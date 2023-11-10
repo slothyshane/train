@@ -139,19 +139,22 @@ def track_to_scad(curves, split_lenght, cross_shape,base_filename = 'part',to_st
         curve_3d = np.c_[curve_points, np.zeros(curve_points.shape[0])]
         track = Track(curve_3d)
         track.split_by_length(split_lenght)
-        files = track.save_scad_files(cross_shape,filename,to_stl)
+        files = track.save_scad_files(cross_shape,filename,to_stl=to_stl)
         filenames.append(files)
     return filenames
 
+# function to generate train tracks
+# this function connected to the tag generator and track generator which will generate the track with id
+
 def gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=False,base_filename = 'part',to_stl = False):
-    status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=True,min_rad=0)
+    status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=draw_lines,min_rad=0)
     if status == False:
         print("error, unable to gen")
         return False,[]
     else:
         trackshape = [[0,0],[20,0],[20,10],[17,10],[17,7],[10,7],[10,10],[0,10],[-10,10],[-10,7],[-17,7],[-17,10],[-20,10],[-20,0]]
 
-        filenames = track_to_scad(curves,200,trackshape)
+        filenames = track_to_scad(curves,200,trackshape,to_stl=to_stl)
         return True, filenames
 
 if __name__ == "__main__":
@@ -160,7 +163,7 @@ if __name__ == "__main__":
     start_degs = np.array([0])
     end_degs = np.array([37.67])
 
-    status, filenames = gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=True)
+    status, filenames = gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=True,to_stl=True)
     print(filenames)
 
     # status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=True)

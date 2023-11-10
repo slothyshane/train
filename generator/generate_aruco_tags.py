@@ -16,12 +16,17 @@ def generate_tag(segment,tag_size = 100, start_id = 11, track_id = 0):
         tag_library = f.read().splitlines()
 
     # separate by comma
-    tag_library = [tag.split(',') for tag in tag_library]
+    # tag_library = [tag.split(',') for tag in tag_library]
+
+    # separate by %
+    tag_library = [tag.split('%') for tag in tag_library]
+
 
     # start at the second line
     if len(tag_library) > 1 and tag_library[1] != ['']:
         for i in range(1, len(tag_library)):
             #add to the set
+
             tag_set.add(int(tag_library[i][0]))
 
     tag_printable = False
@@ -61,5 +66,5 @@ def generate_tag(segment,tag_size = 100, start_id = 11, track_id = 0):
     # cv2.waitKey(0)
 
 # generate_tag()
-tag_1 = generate_tag()
-tag_cad = generate_scad_new(tag_1)
+# tag_1 = generate_tag()
+# tag_cad = generate_scad_new(tag_1)
