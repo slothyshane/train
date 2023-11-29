@@ -5,6 +5,7 @@ from scipy.special import comb
 from scipy.interpolate import splprep, splev
 from solid2.extensions.bosl2 import *
 from solid2.extensions.bosl2 import metric_screws
+from solid2 import set_global_fn
 from subprocess import run
 import math
 import sys, os
@@ -104,13 +105,16 @@ class Track:
                             [0, 0, 1]])
             print(rotation_matrix)
             rotated_curve = [(rotation_matrix.dot(np.array([x, y, z])).tolist()) for x, y, z in translated_curve]
+            rotated_curve[0] = [rotated_curve[0][0] , rotated_curve[0][1]+3,0.0]
+            rotated_curve.insert(0,[0.0,0.0,0.0])
             self.segments[i] = rotated_curve
+            # print(self.segments[i])
             print(rotated_curve[0],rotated_curve[1])
 
         return self.segments
     
     def save_scad_files(self, cross_shape, base_filename, to_stl=False):
-
+        set_global_fn(10000)
         if len(self.segments)>0:
             base_names = []
             for i, segment in enumerate(self.segments):
@@ -119,9 +123,38 @@ class Track:
 
                 filename = f"{base_filename}_{i + 1}.scad"
 
-                tag = generate_aruco_tags.generate_tag(segment)
-                tag_cad = utils.generate_scad_new(tag)
-                tag_cad = tag_cad.right(30).up(0.01)
+                # tag = generate_aruco_tags.generate_tag(segment)
+                # tag_cad = utils.generate_scad_new(tag)
+                # tag_cad = tag_cad.right(30)
+                R = 25
+                R1 = 10
+                R2 = 8
+                R3 = 6
+                # Our Driving wheel Tag!!!
+                # tag = cylinder(h=3.0,r1=R,r2 = (R-3))+\
+                #     cube([R*1.5, 5, 3],center=True).left(R*1.5).up(1.5)+\
+                #     cube([5, R, 3],center=True).back(R+5).up(1.5)+\
+                #     cube([R*2+4, 10, 5]).left(R*2+2).back(R+7.5)
+                        # cube([R, 10, 5]).left(R).back(3*R)+\
+                        # cube([2, R, 3]).right(R).back(R-3)
+
+                # no chamfer
+                # tag = cylinder(h=3.0,r1=R,r2 = (R))+\
+                #         cube([9, R, 3],center=True).fwd(R).up(1.5)+\
+                #         cube([R*2+5, 10, 7],center=True).left(R*1-2.5).fwd(R+10).up(3.5)
+                # tag_cad = tag-cylinder(h=3.01,r1=(R1),r2 = (R1)).fwd(10).down(0.005)-\
+                #         cylinder(h=3.01,r1=(R3),r2 = (R3)).back(8).left(12).down(0.005)-\
+                #         cylinder(h=3.01,r1=(R2),r2 = (R2)).back(8).right(12).down(0.005)
+                
+                # Chamfered
+                tag = cylinder(h=3.0,r1=R,r2 = (R-3),_fn = 40)+\
+                        cube([9, R, 3],center=True).fwd(R).up(1.5)+\
+                        cube([R*2+5, 10.2, 7],center=True).left(R*1-2.5).fwd(R+9.9).up(3.5)
+                tag_cad = tag-cylinder(h=3.01,r1=(R1),r2 = (R1+3),_fn = 40).fwd(10).down(0.005)-\
+                        cylinder(h=3.01,r1=(R3),r2 = (R3+3),_fn = 40).back(8).left(12).down(0.005)-\
+                        cylinder(h=3.01,r1=(R2),r2 = (R2+3),_fn = 40).back(8).right(12).down(0.005)
+                
+                tag_cad = tag_cad.right(R*2.5-2.5).back(R+5)
 
                 # find the direction on the end of the track
                 end_point1 = segment[-1]
@@ -131,18 +164,22 @@ class Track:
                 # Calculate the angle in radians
                 angle = math.acos(direction_vector[0] / math.sqrt(direction_vector[0]**2 + direction_vector[1]**2))
 
-
+                print(segment)
 
                 main_path = path_sweep(cross_shape,segment)
 
                 cad = union()(main_path+\
                         # tag_cad+\
-                        cylinder(r=5.5, h=10).right(0).fwd(15) +\
-                        cube([5,20,10],anchor=CENTER).up(5).fwd(10)-\
-                        cylinder(r=6.5, h=11).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
-                        cube([15,7,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-2*np.cos(angle)).back(end_point1[1]-2*np.sin(angle)))
+                        cylinder(r=5.5, h=10,_fn = 40).right(0).fwd(15) +\
+                        cube([5,20,10],anchor=CENTER).up(5).fwd(9.5)-\
+                        cylinder(r=6.5, h=11,_fn = 40).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
+                        cube([15,7,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-2*np.cos(angle)).back(end_point1[1]-2*np.sin(angle))+\
+                        cube([3,10.2,10],anchor=CENTER).up(5).fwd(4.9).right(18.5)-\
+                        cube([21,11,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-15*np.sin(-angle)).back(end_point1[1]-15*np.cos(-angle)))
                 print("union finished")
+                # tag_cad = union()(tag_cad-main_path)
                 cad = cad.add(tag_cad)
+
                 cad.save_as_scad(filename=filename)
 
                 if to_stl == True:

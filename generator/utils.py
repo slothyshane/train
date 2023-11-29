@@ -134,8 +134,10 @@ def generate_scad_new(marker: np.array):
 		for j, cell in enumerate(row):
 			if int(cell) != 0:
 				cube_obj = cube([cell_size+0.1, cell_size+0.1, 3.2])
+				cube_obj = cylinder(h=3.2,r1=(cell_size+0.1)/np.sqrt(2),r2=(cell_size+3.4)/np.sqrt(2),_fn = 4).rotate(a=[0,0,45])
+				# cube_obj = cylinder([3.2,(cell_size+0.1)/np.sqrt(2), (cell_size+3.2)/np.sqrt(2) 3.2])
 				# Translate the cube to the appropriate position based on its location in the array
-				translated_cube = cube_obj.translate([i*cell_size, j*cell_size, -0.1])
+				translated_cube = cube_obj.translate([i*cell_size+0.5*cell_size, j*cell_size+0.5*cell_size, -0.1])
 				# Add the cube to the model
 				model.append(translated_cube)
 				# n_cell+=0.01
@@ -143,7 +145,16 @@ def generate_scad_new(marker: np.array):
 		else: 
 			continue
 	# tag_model = cube([24, 7, 3]).left(24)+cube([24, 7, 3]).left(24).back(48)
-	tag_model = cube([7*cell_size,7*cell_size,3])+cube([3*cell_size, 5, 3]).left(3*cell_size).back(3*cell_size)+cube([7*cell_size, 10, 5]).left(3*cell_size).back(9*cell_size)+cube([7*cell_size, 10, 5]).left(3*cell_size).back(9*cell_size)+cube([5, 18, 3]).right(3*cell_size).back(7*cell_size)
+	# tag_model = cube([7*cell_size,7*cell_size,3])+\
+			# cube([3*cell_size+3, 2, 3]).left(3*cell_size).back(1*cell_size)+\
+	tag_model = cylinder(h=3,r1=(7*cell_size)/np.sqrt(2),r2 = (7*cell_size-6)/np.sqrt(2),_fn = 4).rotate(a=[0,0,45]).translate(v=[cell_size*3.5,cell_size*3.5,0])+\
+		cube([3*cell_size+3, 2, 3]).left(3*cell_size).back(2*cell_size)+\
+		cube([3*cell_size+3, 2, 3]).left(3*cell_size).back(3*cell_size)+\
+		cube([3*cell_size+3, 2, 3]).left(3*cell_size).back(4*cell_size)+\
+		cube([7*cell_size, 10, 5]).left(3*cell_size).back(9*cell_size)+\
+		cube([2, 18+3, 3]).right(3*cell_size).back(7*cell_size-3)+\
+		cube([2, 18+3, 3]).right(2*cell_size).back(7*cell_size-3)+\
+		cube([2, 18+3, 3]).right(1*cell_size).back(7*cell_size-3)
 
 	for i in range(len(model)):
 		tag_model = tag_model-model[i]

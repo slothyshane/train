@@ -104,8 +104,8 @@ def gen_one_path(start_x, start_y, start_deg, end_x, end_y, end_deg, control_len
     angle_radians2 = np.radians(end_deg)
 
     min_dis = np.sqrt((start_x - end_x)**2+(start_y - end_y)**2)
-    if control_length>min_dis/2:
-        control_length = min_dis/2
+    if control_length>min_dis:
+        control_length = min_dis
 
     control_x1 = start_x + control_length/2 * np.cos(angle_radians1)
     control_y1 = start_y + control_length/2 * np.sin(angle_radians1)
@@ -121,14 +121,14 @@ def gen_one_path(start_x, start_y, start_deg, end_x, end_y, end_deg, control_len
     x_data = np.array([line_start[0], control_p1[0],control_p2[0], line_end[0]])
     y_data = np.array([line_start[1], control_p1[1],control_p2[1], line_end[1]])
 
-    t_value = 1000
+    t_value = 50
 
     control_points = np.column_stack((x_data, y_data))
     curve = np.array(bezier_curve(control_points,t_value))
     curve = np.flip(curve,0)
     return curve,control_p1,control_p2
 
-def track_to_scad(curves, split_lenght, cross_shape,base_filename = 'part',to_stl = False):
+def track_to_scad(curves, split_lenght, cross_shape,base_filename = 'part_arc',to_stl = False):
     num_tracks = len(curves)
     filenames = []
     for i in range(num_tracks):
@@ -147,7 +147,7 @@ def track_to_scad(curves, split_lenght, cross_shape,base_filename = 'part',to_st
 # this function connected to the tag generator and track generator which will generate the track with id
 
 def gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=False,base_filename = 'part',to_stl = False):
-    status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=draw_lines,min_rad=0)
+    status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=draw_lines,min_rad=100)
     if status == False:
         print("error, unable to gen")
         return False,[]
@@ -158,10 +158,13 @@ def gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=False,base_filen
         return True, filenames
 
 if __name__ == "__main__":
-    starts = np.array([[187.5,17.5]])
-    ends = np.array([[322.1,35.5]])
+    starts = np.array([[187.5,-17.5]])
+    ends = np.array([[322.1,-25.5]])
+    # starts = np.array([[200,0]])
+    # ends = np.array([[300,0]])
     start_degs = np.array([0])
-    end_degs = np.array([37.67])
+    end_degs = np.array([-17.67])
+    # end_degs = np.array([0])
 
     status, filenames = gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=True,to_stl=True)
     print(filenames)
