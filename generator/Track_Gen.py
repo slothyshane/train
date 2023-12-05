@@ -158,15 +158,15 @@ def gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=False,base_filen
         return True, filenames
 
 if __name__ == "__main__":
-    starts = np.array([[187.5,-17.5]])
-    ends = np.array([[322.1,-25.5]])
-    # starts = np.array([[200,0]])
-    # ends = np.array([[300,0]])
+    # starts = np.array([[187.5,-17.5]])
+    # ends = np.array([[322.1,-25.5]])
+    starts = np.array([[200,0]])
+    ends = np.array([[300,0]])
     start_degs = np.array([0])
-    end_degs = np.array([-17.67])
-    # end_degs = np.array([0])
+    # end_degs = np.array([-17.67])
+    end_degs = np.array([0])
 
-    status, filenames = gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=True,to_stl=True)
+    status, filenames = gen_train_tracks(starts,start_degs,ends,end_degs,draw_lines=True,to_stl=False)
     print(filenames)
 
     # status, curves = gen_train_curves(starts,start_degs,ends,end_degs,draw_lines=True)

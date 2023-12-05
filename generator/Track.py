@@ -147,13 +147,20 @@ class Track:
                 #         cylinder(h=3.01,r1=(R2),r2 = (R2)).back(8).right(12).down(0.005)
                 
                 # Chamfered
+                # tag = cylinder(h=3.0,r1=R,r2 = (R-3),_fn = 40)+\
+                #         cube([9, R, 3],center=True).fwd(R).up(1.5)+\
+                #         cube([R*2+2, 9, 5],center=True).left(R*1-1.5).fwd(R+9.9).up(2.5)#-\
+                        # cube([5, 10, 5],center=True).rotate([0,45,0]).left(R*2-1.5).fwd(R+9.9).up(2.5)
+
+                # connector bar change direction
                 tag = cylinder(h=3.0,r1=R,r2 = (R-3),_fn = 40)+\
-                        cube([9, R, 3],center=True).fwd(R).up(1.5)+\
-                        cube([R*2+5, 10.2, 7],center=True).left(R*1-2.5).fwd(R+9.9).up(3.5)
+                        cube([9, R, 3],center=True).back(R).up(1.5)+\
+                        cube([R*2+2, 9, 5],center=True).left(R*1-1.5).back(R+9.9).up(2.5)#-\
                 tag_cad = tag-cylinder(h=3.01,r1=(R1),r2 = (R1+3),_fn = 40).fwd(10).down(0.005)-\
                         cylinder(h=3.01,r1=(R3),r2 = (R3+3),_fn = 40).back(8).left(12).down(0.005)-\
                         cylinder(h=3.01,r1=(R2),r2 = (R2+3),_fn = 40).back(8).right(12).down(0.005)
                 
+                # tag_cad = tag_cad.right(R*2.5-2.5).back(R+5)
                 tag_cad = tag_cad.right(R*2.5-2.5).back(R+5)
 
                 # find the direction on the end of the track
@@ -170,16 +177,23 @@ class Track:
 
                 cad = union()(main_path+\
                         # tag_cad+\
-                        cylinder(r=5.5, h=10,_fn = 40).right(0).fwd(15) +\
-                        cube([5,20,10],anchor=CENTER).up(5).fwd(9.5)-\
-                        cylinder(r=6.5, h=11,_fn = 40).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
-                        cube([15,7,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-2*np.cos(angle)).back(end_point1[1]-2*np.sin(angle))+\
-                        cube([3,10.2,10],anchor=CENTER).up(5).fwd(4.9).right(18.5)-\
-                        cube([21,11,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-15*np.sin(-angle)).back(end_point1[1]-15*np.cos(-angle)))
+                        cylinder(r1=5.4,r2 = 0.2, h=5.5,_fn = 40).right(0).fwd(15).up(5) +\
+                        cylinder(r1=2.5,r2 = 5.4, h=5,_fn = 40).right(0).fwd(15).up(0) +\
+                        cube([5,20,5],anchor=CENTER).rotate(a=[0,45,0]).up(5).fwd(5.5)-\
+                        cylinder(r1=6.5,r2 = 9, h=6,_fn = 40).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).up(5)-\
+                        cylinder(r1=9,r2 = 6.5, h=6,_fn = 40).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
+                        # cylinder(r=6.5, h=11,_fn = 40).right(end_point1[0]-14*np.cos(angle)).back(end_point1[1]-14*np.sin(angle)).down(0.5)-\
+                        cube([18,8.5,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-2*np.cos(angle)).back(end_point1[1]-2*np.sin(angle)))#+\
+                        # cube([7,10.2,7],anchor=CENTER).up(3.5).fwd(4.9).right(14)+\
+                        # cube([3,10.2,10],anchor=CENTER).up(5).fwd(4.9).right(18.5)-\
+                        # cube([21,11,30],anchor=CENTER).rotate(180*angle/np.pi).right(end_point1[0]-15*np.sin(-angle)).back(end_point1[1]-15*np.cos(-angle))-\
+                        # cube([21,11,11],anchor=CENTER).rotate(180*angle/np.pi).rotate(a=[0,45,angle]).right(end_point1[0]-15*np.sin(-angle)).back(end_point1[1]-15*np.cos(-angle)))
+                        # cube([5, 10, 5],center=True).rotate([0,45,0])
                 print("union finished")
                 # tag_cad = union()(tag_cad-main_path)
                 cad = cad.add(tag_cad)
-
+                # cad = cad-cube([5,11,5],anchor=CENTER).rotate(a=[0,45,0]).fwd(5.6).right(10)
+                cad.rotate(a=[0,0,180])
                 cad.save_as_scad(filename=filename)
 
                 if to_stl == True:
